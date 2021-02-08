@@ -27,18 +27,19 @@ jobs:
           mkdir -p "$HOME/.local/bin"
           export PATH=$HOME/.local/bin:$PATH
 
-          #: "info"
+          : "info"
 
-          #uname -a
-          #ls -al /
-          #: "home"
-          #ls -al $HOME
-          #set
+          uname -a
+          ls -al /
+          : "home"
+          ls -al $HOME
+          set
 
-          #: "try stack install"
+          : "try stack install"
 
-          #curl -sSL https://get.haskellstack.org/ | sh
-          #stack --allow-different-user setup
-          #stack --allow-different-user new foo hspec
-          #cd foo; stack --allow-different-user test
+          curl -sSL https://get.haskellstack.org/ | sh
+          stack --allow-different-user setup
+          stack --allow-different-user new foo hspec
+          cd foo; stack --allow-different-user test
+
           set +ex
