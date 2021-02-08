@@ -8,6 +8,7 @@ jobs:
   build:
     runs-on: ubuntu-16.04
     strategy:
+      fail-fast: false
       matrix:
         docker-container:
           #- centos:7.6.1810
@@ -22,6 +23,10 @@ jobs:
           set -ex
 
           dnf install -y curl
+
+          mkdir -p "$HOME/.local/bin"
+          export PATH=$HOME/.local/bin:$PATH
+
           curl -sSL https://get.haskellstack.org/ | sh
           stack setup
           stack new foo hspec
