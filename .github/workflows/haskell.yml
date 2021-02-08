@@ -24,22 +24,25 @@ jobs:
 
           dnf install -y curl
 
-          mkdir -p "$HOME/.local/bin"
-          export PATH=$HOME/.local/bin:$PATH
+          mkdir -p "root/.local/bin"
+          export PATH=root/.local/bin:$PATH
 
-          : "info"
-
+          : "uname"
           uname -a
+          : "ls -al"
           ls -al /
-          : "home"
-          ls -al $HOME
+          : "id"
+          id
+          : "set"
           set
 
           : "try stack install"
 
           curl -sSL https://get.haskellstack.org/ | sh
-          stack --allow-different-user setup
-          stack --allow-different-user new foo hspec
-          cd foo; stack --allow-different-user test
+
+          alias stack="stack --stack-root=/root/.stack"
+          stack setup
+          stack new foo hspec
+          cd foo; stack test
 
           set +ex
