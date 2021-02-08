@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         docker-container:
-          - centos:7.6.1810
+          #- centos:7.6.1810
           - fedora:26
           - fedora:32
     container:
