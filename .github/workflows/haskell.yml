@@ -1,0 +1,28 @@
+
+
+name: haskell-build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-16.04
+    strategy:
+      matrix:
+        docker-container:
+          - centos:7.6.1810
+          - fedora:26
+          - fedora:32
+
+    name: ${{ matrix.docker-container }} in docker
+    steps:
+      - name: try installing stack
+        run: |
+          set -ex
+
+          dnf install -y curl
+          curl -sSL https://get.haskellstack.org/ | sh
+          stack setup
+          stack new foo hspec
+          cd foo; stack test
+          set +ex
