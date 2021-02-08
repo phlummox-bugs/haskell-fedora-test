@@ -14,35 +14,19 @@ jobs:
           #- centos:7.6.1810
           - fedora:26
           - fedora:32
-    container:
-      image: ${{ matrix.docker-container }}
-    name: ${{ matrix.docker-container }} in docker
+        stack-lts:
+          - lts-16
+          - lts-17
+    #container:
+    #  image: ${{ matrix.docker-container }}
+    name: stack ${{ matrix.stack-lts }} in ${{ matrix.docker-container }}
     steps:
       - name: try installing stack
         run: |
           set -ex
 
-          dnf install -y curl
-
-          mkdir -p "root/.local/bin"
-          export PATH=root/.local/bin:$PATH
-
-          : "uname"
-          uname -a
-          : "ls -al"
-          ls -al /
-          : "id"
-          id
-          : "set"
-          set
-
-          : "try stack install"
-
-          curl -sSL https://get.haskellstack.org/ | sh
-
-          alias stack="stack --stack-root=/root/.stack"
-          stack setup
-          stack new foo hspec
-          cd foo; stack test
+          docker pull ${{ matrix.docker-container }}
+          docker run -v $PWD:/opt/work  --workdir /opt/work \
+              ${{ matrix.docker-container }} /opt/work/try-stack.sh ${{ matrix.stack-lts }}
 
           set +ex
