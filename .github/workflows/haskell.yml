@@ -21,6 +21,7 @@ jobs:
     #  image: ${{ matrix.docker-container }}
     name: stack ${{ matrix.stack-lts }} in ${{ matrix.docker-container }}
     steps:
+      - uses: actions/checkout@v2
       - name: try installing stack
         run: |
           set -ex
